@@ -1,0 +1,56 @@
+@page "/lazy"
+@using Microsoft.AspNetCore.Components.WebAssembly.Services
+@inject LazyAssemblyLoader AssemblyLoader
+
+<h3>Lazy Loaded Feature Demo</h3>
+<button @onclick="LoadLazyComponent">Lazy Feature をロード</button>
+
+@if (componentType != null)
+{
+    <DynamicComponent Type="@componentType" />
+}
+@code {
+    private Type? componentType;
+
+    private async Task LoadLazyComponent()
+    {
+        try
+        {
+            // LazyFeature.dll の動的読み込み
+            await AssemblyLoader.LoadAssembliesAsync(new[] { "LazyFeature.dll" });
+            Console.WriteLine("LazyFeature.dll successfully loaded.");
+
+            // アセンブリの情報を取得
+            Console.WriteLine("Available types in loaded assemblies:");
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                Console.WriteLine($"Assembly: {assembly.FullName}");
+                foreach (var type in assembly.ExportedTypes)
+                {
+                    Console.WriteLine($"Type: {type.FullName}");
+                }
+            }
+
+            // 読み込んだアセンブリからコンポーネントの型を探す
+            componentType = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(a => a.ExportedTypes)
+                .FirstOrDefault(t => t.FullName == "LazyFeature.LazyComponent");
+
+            if (componentType != null)
+            {
+                Console.WriteLine($"Component type found: {componentType.FullName}");
+            }
+            else
+            {
+                Console.WriteLine("Component type not found.");
+            }
+
+            // UI を更新する
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading LazyFeature: {ex.Message}");
+        }
+    }
+}
