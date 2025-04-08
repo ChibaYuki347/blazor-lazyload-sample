@@ -1,7 +1,7 @@
 # Blazor WASM の動的ロードサンプル
 
 <p align="center">
-  <a href="Readmd.ja">🇯🇵 日本語</a> &nbsp;|&nbsp;
+  <a href="Readme.ja.md">🇯🇵 日本語</a> &nbsp;|&nbsp;
   <a href="Readme.md">🇺🇸 English</a>
 </p>
 ---

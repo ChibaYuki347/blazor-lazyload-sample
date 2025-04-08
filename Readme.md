@@ -1,7 +1,7 @@
 # Dynamic Loading Sample for Blazor WASM
 
 <p align="center">
-    <a href="Readmd.ja">🇯🇵 日本語</a> &nbsp;|&nbsp;
+    <a href="Readme.ja.md">🇯🇵 日本語</a> &nbsp;|&nbsp;
     <a href="Readme.md">🇺🇸 English</a>
 </p>
 ---
